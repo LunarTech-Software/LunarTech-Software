@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* backgrounds */
+  --color-void: #030712;
+  --color-deep-space: #050A12;
+  --color-navy-space: #07111F;
+  --color-midnight: #0B1B33;
+  --color-panel: #101828;
+
+  /* brand tones */
+  --color-lunar-navy: #223163;
+  --color-orbital-blue: #39547B;
+  --color-tech-blue: #4E7393;
+  --color-steel-teal: #5C88A0;
+  --color-lunar-teal: #6A9AA8;
+
+  /* text */
+  --color-soft-white: #F4F7FA;
+  --color-icy-silver: #D7E6EA;
+  --color-muted-silver: #A7B4C2;
+  --color-technical-grey: #6F7C8E;
+}
+
+:root {
+  font-family: var(--font-sans);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #030712;
+  color: #F4F7FA;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #223163;
+  color: #F4F7FA;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.01em;
+}
+
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+@keyframes orbit-spin-reverse { to { transform: rotate(-360deg); } }
+@keyframes node-pulse { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.15); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes marquee-scroll { to { transform: translateX(-50%); } }
+@keyframes star-twinkle { 0%, 100% { opacity: var(--star-min-opacity, 0.2); } 50% { opacity: var(--star-max-opacity, 0.9); } }
+@keyframes shooting-star {
+  0% { transform: translate(0, 0) rotate(215deg); opacity: 0; }
+  2% { opacity: 1; }
+  9% { opacity: 0; }
+  100% { transform: translate(-120vw, 120vh) rotate(215deg); opacity: 0; }
+}
+
+.animate-orbit-spin { animation: orbit-spin 90s linear infinite; }
+.animate-orbit-spin-slow { animation: orbit-spin 140s linear infinite; }
+.animate-orbit-spin-reverse { animation: orbit-spin-reverse 110s linear infinite; }
+.marquee-track { animation: marquee-scroll 46s linear infinite; }
+.marquee-viewport:hover .marquee-track { animation-play-state: paused; }
+.animate-node-pulse { animation: node-pulse 2.8s ease-in-out infinite; }
+.animate-float { animation: float-y var(--float-duration, 8s) ease-in-out infinite; }
+.animate-star-twinkle { animation: star-twinkle var(--star-duration, 4s) ease-in-out infinite; animation-delay: var(--star-delay, 0s); }
+.animate-shooting-star { animation: shooting-star var(--shoot-duration, 11s) linear infinite; animation-delay: var(--shoot-delay, 0s); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
