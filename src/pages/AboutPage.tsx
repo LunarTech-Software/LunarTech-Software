@@ -18,7 +18,7 @@ export default function AboutPage() {
     <div>
       <StarfieldBackdrop />
       <PageHero
-        kicker="we are the avengers"
+        kicker="who we are"
         title="The orbit your operations organize around."
         subtitle="LUNAR is a digital engineering and automation company that builds the systems which real businesses run on."
       />
