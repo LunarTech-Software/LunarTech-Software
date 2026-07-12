@@ -20,7 +20,7 @@ export default function AboutPage() {
       <PageHero
         kicker="Who we are"
         title="The orbit your operations organize around."
-        subtitle="LUNAR is a digital engineering and automation company that builds the systems real businesses run on."
+        subtitle="LUNAR is a digital engineering and automation company that builds the systems which real businesses run on."
       />
 
       {/* The name */}
