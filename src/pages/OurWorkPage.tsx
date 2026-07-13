@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Info } from "lucide-react";
+import { Info, ExternalLink } from "lucide-react";
 import { Container, Section } from "../components/Section";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 import CTABand from "../components/CTABand";
 import ProjectVisual from "../components/work/ProjectVisual";
+import LivePreviewFrame from "../components/work/LivePreviewFrame";
 import type { WorkLabel } from "../lib/site";
 import { useSiteData } from "../lib/useSiteData";
 import { useLanguage } from "../lib/i18n/LanguageContext";
@@ -16,11 +17,12 @@ const labelStyle: Record<WorkLabel, string> = {
   Demo: "border-white/15 bg-white/5 text-muted-silver",
   Prototype: "border-amber-500/30 bg-amber-500/10 text-amber-300",
   Concept: "border-white/15 bg-white/5 text-muted-silver",
+  "In Progress": "border-amber-500/30 bg-amber-500/10 text-amber-300",
 };
 
 const labelText: Record<"en" | "id", Record<WorkLabel, string>> = {
-  en: { Platform: "Platform", Demo: "Demo", Prototype: "Prototype", Concept: "Concept" },
-  id: { Platform: "Platform", Demo: "Demo", Prototype: "Prototipe", Concept: "Konsep" },
+  en: { Platform: "Platform", Demo: "Demo", Prototype: "Prototype", Concept: "Concept", "In Progress": "In Progress" },
+  id: { Platform: "Platform", Demo: "Demo", Prototype: "Prototipe", Concept: "Konsep", "In Progress": "Dalam Proses" },
 };
 
 const copy = {
@@ -92,20 +94,30 @@ export default function OurWorkPage() {
                   exit={{ opacity: 0, scale: 0.97 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <Link
-                    to={`/our-work/${p.slug}`}
-                    className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition-colors hover:border-white/20"
-                  >
-                    <ProjectVisual kind={p.visual} />
-                    <div className="mt-4 flex items-center justify-between gap-2">
-                      <span className="text-[11px] uppercase tracking-[0.14em] text-technical-grey">{p.category}</span>
-                      <span className={`rounded-full border px-2.5 py-0.5 text-[10px] uppercase tracking-wide ${labelStyle[p.label]}`}>
-                        {labelText[lang][p.label]}
-                      </span>
+                  <div className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition-colors hover:border-white/20">
+                    <Link to={`/our-work/${p.slug}`} className="absolute inset-0 z-0" aria-label={p.title} />
+                    <div className="pointer-events-none relative z-[1] flex h-full flex-col">
+                      {p.liveUrl ? <LivePreviewFrame url={p.liveUrl} /> : <ProjectVisual kind={p.visual} />}
+                      <div className="mt-4 flex items-center justify-between gap-2">
+                        <span className="text-[11px] uppercase tracking-[0.14em] text-technical-grey">{p.category}</span>
+                        <span className={`rounded-full border px-2.5 py-0.5 text-[10px] uppercase tracking-wide ${labelStyle[p.label]}`}>
+                          {labelText[lang][p.label]}
+                        </span>
+                      </div>
+                      <h3 className="mt-3 text-lg font-medium text-soft-white">{p.title}</h3>
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-silver">{p.solutionText}</p>
+                      {p.liveUrl && (
+                        <a
+                          href={p.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pointer-events-auto relative z-[2] mt-4 inline-flex w-fit items-center gap-1.5 text-[13px] text-lunar-teal hover:text-soft-white transition-colors"
+                        >
+                          View live site <ExternalLink size={13} />
+                        </a>
+                      )}
                     </div>
-                    <h3 className="mt-3 text-lg font-medium text-soft-white">{p.title}</h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-silver">{p.solutionText}</p>
-                  </Link>
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>

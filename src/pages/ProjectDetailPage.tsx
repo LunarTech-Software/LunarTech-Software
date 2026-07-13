@@ -1,17 +1,18 @@
 import { useParams, Navigate, Link } from "react-router-dom";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, ExternalLink } from "lucide-react";
 import { Container, Section, Kicker, Heading } from "../components/Section";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 import CTABand from "../components/CTABand";
 import ProjectVisual from "../components/work/ProjectVisual";
+import LivePreviewFrame from "../components/work/LivePreviewFrame";
 import type { WorkLabel } from "../lib/site";
 import { useSiteData } from "../lib/useSiteData";
 import { useLanguage } from "../lib/i18n/LanguageContext";
 
 const labelText: Record<"en" | "id", Record<WorkLabel, string>> = {
-  en: { Platform: "Platform", Demo: "Demo", Prototype: "Prototype", Concept: "Concept" },
-  id: { Platform: "Platform", Demo: "Demo", Prototype: "Prototipe", Concept: "Konsep" },
+  en: { Platform: "Platform", Demo: "Demo", Prototype: "Prototype", Concept: "Concept", "In Progress": "In Progress" },
+  id: { Platform: "Platform", Demo: "Demo", Prototype: "Prototipe", Concept: "Konsep", "In Progress": "Dalam Proses" },
 };
 
 const copy = {
@@ -64,7 +65,21 @@ export default function ProjectDetailPage() {
 
           <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
             <Reveal>
-              <ProjectVisual kind={project.visual} className="aspect-auto h-full min-h-64" />
+              {project.liveUrl ? (
+                <LivePreviewFrame url={project.liveUrl} className="aspect-auto h-full min-h-64" />
+              ) : (
+                <ProjectVisual kind={project.visual} className="aspect-auto h-full min-h-64" />
+              )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-lunar-teal/40 px-5 py-2.5 text-sm text-lunar-teal hover:bg-lunar-teal/10 transition-colors"
+                >
+                  View live site <ExternalLink size={14} />
+                </a>
+              )}
             </Reveal>
 
             <div className="space-y-8">

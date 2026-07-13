@@ -212,9 +212,9 @@ export const clientSegments = [
 ];
 
 // --- Selected work (placeholder / demo / prototype — never presented as client delivery) ---
-export type WorkLabel = "Platform" | "Demo" | "Prototype" | "Concept";
+export type WorkLabel = "Platform" | "Demo" | "Prototype" | "Concept" | "In Progress";
 
-export type ProjectVisualKind = "dashboard" | "sensor" | "map" | "floor" | "devices" | "portal" | "booking" | "camera";
+export type ProjectVisualKind = "dashboard" | "sensor" | "map" | "floor" | "devices" | "portal" | "booking" | "camera" | "wip";
 
 export interface Project {
   slug: string;
@@ -227,6 +227,8 @@ export interface Project {
   solutionText: string;
   value: string;
   features: string[];
+  /** Live, viewable link — only set once a real build exists to show. */
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [
@@ -241,6 +243,7 @@ export const projects: Project[] = [
     solutionText: "A professional, responsive site with lead capture and clear enquiry paths.",
     value: "Credible presence that converts visitors into enquiries.",
     features: ["Responsive design", "Lead-capture forms", "Catalogue integration", "SEO fundamentals"],
+    liveUrl: "https://lumaradesign.netlify.app/",
   },
   {
     slug: "custom-business-system",
@@ -253,102 +256,68 @@ export const projects: Project[] = [
     solutionText: "A live inventory and records system with real-time dashboards and low-stock alerts.",
     value: "One source of truth, replacing fragile spreadsheets.",
     features: ["Real-time stock levels", "KPI dashboard", "Low-stock threshold alerts", "Exportable reports"],
+    // TODO: add the live Netlify URL here once baja-makmur-erp-v2 is deployed, e.g.:
+    // liveUrl: "https://baja-makmur-erp.netlify.app/",
   },
   {
-    slug: "cold-storage-guardian",
-    title: "Cold Storage Guardian",
-    category: "Temperature Monitoring",
-    label: "Demo",
-    tags: ["automation-iot", "factory"],
-    visual: "sensor",
-    problem: "Cold-chain risk with no continuous record of temperature.",
-    solutionText: "Continuous cold-chain monitoring with instant alerts on breach.",
-    value: "Catch temperature excursions before stock is lost.",
-    features: ["Live sensor feed", "Threshold breach alerts", "Historical temperature log", "WhatsApp/SMS escalation"],
+    slug: "automation-iot-wip",
+    title: "Automation & IoT Monitoring",
+    category: "Automation & IoT",
+    label: "In Progress",
+    tags: ["automation-iot"],
+    visual: "wip",
+    problem: "This solution area is still in active development.",
+    solutionText: "We're currently building our first sensor and automation monitoring prototype.",
+    value: "Check back soon, or discuss your specific use case with us directly.",
+    features: ["In development"],
   },
   {
-    slug: "farm-watch-pilot",
-    title: "Farm Watch Pilot",
-    category: "IoT Monitoring",
-    label: "Prototype",
-    tags: ["agriculture", "automation-iot"],
-    visual: "map",
-    problem: "Field conditions checked on foot, with issues spotted late.",
-    solutionText: "Field sensors streaming conditions with early-warning alerts.",
-    value: "Field-level visibility without walking the estate.",
-    features: ["Environmental sensor feed", "Estate map view", "Early-warning alerts", "Activity log"],
+    slug: "agriculture-wip",
+    title: "Agriculture & Plantation Monitoring",
+    category: "Agriculture",
+    label: "In Progress",
+    tags: ["agriculture"],
+    visual: "wip",
+    problem: "This solution area is still in active development.",
+    solutionText: "We're currently building our first field and estate monitoring prototype.",
+    value: "Check back soon, or discuss your specific use case with us directly.",
+    features: ["In development"],
   },
   {
-    slug: "factory-visibility-system",
-    title: "Factory Visibility System",
-    category: "Facility Monitoring",
-    label: "Concept",
+    slug: "factory-wip",
+    title: "Factory & Facility Monitoring",
+    category: "Factory",
+    label: "In Progress",
     tags: ["factory"],
-    visual: "floor",
-    problem: "Floor status, equipment health, and downtime scattered and unseen.",
-    solutionText: "One view of floor status, equipment health, and downtime alerts.",
-    value: "See the whole floor at a glance; act on downtime faster.",
-    features: ["Live floor status", "Equipment health tiles", "Downtime alerts", "Maintenance history"],
+    visual: "wip",
+    problem: "This solution area is still in active development.",
+    solutionText: "We're currently building our first factory and facility monitoring prototype.",
+    value: "Check back soon, or discuss your specific use case with us directly.",
+    features: ["In development"],
   },
   {
-    slug: "service-booking-system",
-    title: "Service Booking System",
+    slug: "education-wip",
+    title: "Education & STEM Solutions",
+    category: "Education",
+    label: "In Progress",
+    tags: ["education"],
+    visual: "wip",
+    problem: "This solution area is still in active development.",
+    solutionText: "We're currently building our first learning-portal and applied STEM prototype.",
+    value: "Check back soon, or discuss your specific use case with us directly.",
+    features: ["In development"],
+  },
+  {
+    slug: "service-sector-wip",
+    title: "Service Sector Digital Systems",
     category: "Service Sector",
-    label: "Concept",
+    label: "In Progress",
     tags: ["service-sector"],
-    visual: "booking",
-    problem: "Bookings tracked by phone and paper, with double-bookings and no client history.",
-    solutionText: "A booking and client management system for clinics, salons, and service businesses.",
-    value: "Fewer missed appointments and a full history for every client.",
-    features: ["Online booking and scheduling", "Client and job records", "Automated reminders", "Staff scheduling"],
-  },
-  {
-    slug: "tax-finance-tool",
-    title: "Tax / Finance Tool",
-    category: "Business System",
-    label: "Prototype",
-    tags: ["business systems"],
-    visual: "dashboard",
-    problem: "Finance and tax records kept in fragile, error-prone spreadsheets.",
-    solutionText: "Structured records and workflows with exportable reports for finance and tax.",
-    value: "Trustworthy records with less manual re-keying.",
-    features: ["Structured financial records", "Approval workflows", "PDF report generation", "Role-based access"],
-  },
-  {
-    slug: "school-stem-portal",
-    title: "School STEM Portal",
-    category: "Education System",
-    label: "Demo",
-    tags: ["education", "web"],
-    visual: "portal",
-    problem: "Learning materials and lab progress fragmented across tools.",
-    solutionText: "A learning portal with monitoring dashboards for applied STEM.",
-    value: "A single home for curriculum, progress, and lab data.",
-    features: ["Learning portal", "Progress dashboards", "Milestone tracking", "Applied STEM curriculum"],
-  },
-  {
-    slug: "smart-plant-monitor",
-    title: "Smart Plant Monitor",
-    category: "Facility Monitoring",
-    label: "Prototype",
-    tags: ["factory", "automation-iot"],
-    visual: "sensor",
-    problem: "Equipment health and environmental conditions checked manually, if at all.",
-    solutionText: "Sensor-based monitoring of equipment and environmental conditions with alerts.",
-    value: "Early warning on equipment issues before they cause downtime.",
-    features: ["Equipment health sensors", "Environmental monitoring", "Threshold alerts", "Historical trends"],
-  },
-  {
-    slug: "cctv-facility-monitoring-concept",
-    title: "CCTV / Facility Monitoring Concept",
-    category: "Facility Monitoring",
-    label: "Concept",
-    tags: ["automation-iot", "factory", "service-sector"],
-    visual: "camera",
-    problem: "No visibility into a site or facility outside working hours, and no unified view of cameras and sensors.",
-    solutionText: "A concept for integrating CCTV and access monitoring into the same dashboard as equipment and environmental sensors.",
-    value: "One place to see equipment status and site security together.",
-    features: ["Camera-based monitoring integration", "Alert notifications", "Unified facility dashboard", "Access/event logs"],
+    visual: "wip",
+    problem: "This solution area is still in active development.",
+    solutionText: "We're currently building our first booking and client-management prototype.",
+    value: "Check back soon, or discuss your specific use case with us directly.",
+    features: ["In development"],
   },
 ];
 

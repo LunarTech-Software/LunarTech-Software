@@ -1,4 +1,4 @@
-import { Gauge, Thermometer, MapPin, Factory as FactoryIcon, Monitor, GraduationCap, CalendarCheck, Camera } from "lucide-react";
+import { Gauge, Thermometer, MapPin, Factory as FactoryIcon, Monitor, GraduationCap, CalendarCheck, Camera, Construction } from "lucide-react";
 import type { ProjectVisualKind } from "../../lib/site";
 
 /** Code-rendered mockup visual per project category — no external image assets required. */
@@ -18,6 +18,21 @@ export default function ProjectVisual({ kind, className = "" }: { kind: ProjectV
       {kind === "portal" && <PortalVisual />}
       {kind === "booking" && <BookingVisual />}
       {kind === "camera" && <CameraVisual />}
+      {kind === "wip" && <WipVisual />}
+    </div>
+  );
+}
+
+function WipVisual() {
+  return (
+    <div className="relative z-10 flex w-[75%] flex-col items-center gap-3">
+      <Construction size={26} className="text-amber-400" strokeWidth={1.5} />
+      <div className="w-full space-y-1.5">
+        <div className="h-1.5 w-full rounded-full bg-white/10">
+          <div className="h-1.5 w-1/3 rounded-full bg-amber-400/70" />
+        </div>
+        <p className="text-center text-[10px] text-muted-silver">In development</p>
+      </div>
     </div>
   );
 }
