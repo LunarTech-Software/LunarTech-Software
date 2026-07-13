@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import { MessageCircle, Mail } from "lucide-react";
 import Logo from "./Logo";
-import { navLinks, solutions, contact, tagline } from "../lib/site";
+import { contact } from "../lib/site";
+import { useSiteData } from "../lib/useSiteData";
+import { useCommonStrings } from "../lib/i18n/common";
 
 export default function Footer() {
+  const { navLinks, solutions, tagline } = useSiteData();
+  const c = useCommonStrings();
+
   return (
     <footer className="relative z-10 border-t border-white/8 bg-deep-space">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
@@ -28,7 +33,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-xs tracking-[0.24em] uppercase text-technical-grey mb-4">Navigate</h4>
+            <h4 className="text-xs tracking-[0.24em] uppercase text-technical-grey mb-4">{c.navigate}</h4>
             <ul className="space-y-3 text-sm text-muted-silver">
               {navLinks.map((link) => (
                 <li key={link.to}>
@@ -41,7 +46,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-xs tracking-[0.24em] uppercase text-technical-grey mb-4">Solutions</h4>
+            <h4 className="text-xs tracking-[0.24em] uppercase text-technical-grey mb-4">{c.solutions}</h4>
             <ul className="space-y-3 text-sm text-muted-silver">
               {solutions.map((s) => (
                 <li key={s.slug}>
@@ -55,8 +60,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 pt-8 border-t border-white/8 flex flex-col sm:flex-row gap-3 justify-between text-xs text-technical-grey">
-          <span>© {new Date().getFullYear()} LunarTech. {contact.location}.</span>
-          <span>Every project is scoped to your operation. We don't publish fixed prices.</span>
+          <span>{c.footerCopyright(new Date().getFullYear(), contact.location)}</span>
+          <span>{c.footerNote}</span>
         </div>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-import { Gauge, Thermometer, MapPin, Factory as FactoryIcon, Monitor, GraduationCap } from "lucide-react";
+import { Gauge, Thermometer, MapPin, Factory as FactoryIcon, Monitor, GraduationCap, CalendarCheck, Camera } from "lucide-react";
 import type { ProjectVisualKind } from "../../lib/site";
 
 /** Code-rendered mockup visual per project category — no external image assets required. */
@@ -16,6 +16,8 @@ export default function ProjectVisual({ kind, className = "" }: { kind: ProjectV
       {kind === "floor" && <FloorVisual />}
       {kind === "devices" && <DevicesVisual />}
       {kind === "portal" && <PortalVisual />}
+      {kind === "booking" && <BookingVisual />}
+      {kind === "camera" && <CameraVisual />}
     </div>
   );
 }
@@ -96,6 +98,35 @@ function PortalVisual() {
         ))}
       </div>
       <p className="text-[10px] text-muted-silver">Milestone 2 of 4</p>
+    </div>
+  );
+}
+
+function BookingVisual() {
+  return (
+    <div className="relative z-10 w-[78%] space-y-1.5">
+      <div className="mb-2 flex items-center gap-1.5">
+        <CalendarCheck size={14} className="text-lunar-teal" />
+        <span className="text-[9px] uppercase tracking-wide text-technical-grey">Upcoming bookings</span>
+      </div>
+      {["09:00 · Consultation", "11:30 · Follow-up", "14:00 · New client"].map((row) => (
+        <div key={row} className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 text-[10px] text-muted-silver">
+          {row}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CameraVisual() {
+  return (
+    <div className="relative z-10 grid w-[80%] grid-cols-2 gap-2">
+      {[1, 2, 3, 4].map((n) => (
+        <div key={n} className="relative flex aspect-video items-center justify-center rounded-md border border-white/10 bg-void/50">
+          <Camera size={14} className="text-lunar-teal" strokeWidth={1.5} />
+          <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-emerald-400 animate-node-pulse" />
+        </div>
+      ))}
     </div>
   );
 }

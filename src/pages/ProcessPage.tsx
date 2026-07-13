@@ -3,17 +3,35 @@ import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 import CTABand from "../components/CTABand";
 import StarfieldBackdrop from "../components/StarfieldBackdrop";
-import { processSteps, scopingNote } from "../lib/site";
+import { useSiteData } from "../lib/useSiteData";
+import { useLanguage } from "../lib/i18n/LanguageContext";
+
+const copy = {
+  en: {
+    kicker: "How we work",
+    title: "We understand your operation before we build anything.",
+    subtitle: "A clear, honest path from how you work today to a system your team actually runs.",
+    ctaHeading: "Ready when you are.",
+    ctaBody: "Book a consultation and we'll start by understanding how your business really runs.",
+  },
+  id: {
+    kicker: "Bagaimana kami bekerja",
+    title: "Kami memahami operasi Anda sebelum membangun apa pun.",
+    subtitle: "Jalur yang jelas dan jujur dari cara kerja Anda hari ini menuju sistem yang benar-benar dijalankan tim Anda.",
+    ctaHeading: "Siap kapan pun Anda siap.",
+    ctaBody: "Jadwalkan konsultasi dan kami akan mulai dengan memahami bagaimana bisnis Anda sebenarnya berjalan.",
+  },
+};
 
 export default function ProcessPage() {
+  const { lang } = useLanguage();
+  const t = copy[lang];
+  const { processSteps, scopingNote } = useSiteData();
+
   return (
     <div>
       <StarfieldBackdrop />
-      <PageHero
-        kicker="How we work"
-        title="We understand your operation before we build anything."
-        subtitle="A clear, honest path from how you work today to a system your team actually runs."
-      />
+      <PageHero kicker={t.kicker} title={t.title} subtitle={t.subtitle} />
 
       <Section>
         <Container>
@@ -39,7 +57,7 @@ export default function ProcessPage() {
         </Container>
       </Section>
 
-      <CTABand heading="Ready when you are." body="Book a consultation and we'll start by understanding how your business really runs." catalogue={false} />
+      <CTABand heading={t.ctaHeading} body={t.ctaBody} catalogue={false} />
     </div>
   );
 }

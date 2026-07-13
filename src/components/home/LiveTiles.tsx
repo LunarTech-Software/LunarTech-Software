@@ -1,4 +1,5 @@
 import { Thermometer, Cog, Droplets, Activity, type LucideProps } from "lucide-react";
+import { useLanguage } from "../../lib/i18n/LanguageContext";
 
 interface Tile {
   icon: (p: LucideProps) => React.ReactNode;
@@ -8,12 +9,20 @@ interface Tile {
   meta: string;
 }
 
-const tiles: Tile[] = [
-  { icon: Thermometer, label: "Cold storage", value: "3.4°C", status: "ok", meta: "within range" },
-  { icon: Cog, label: "Line 2 uptime", value: "99.1%", status: "ok", meta: "nominal" },
-  { icon: Droplets, label: "Field moisture", value: "41%", status: "watch", meta: "trending dry" },
-  { icon: Activity, label: "Pump vibration", value: "High", status: "alert", meta: "inspect today" },
-];
+const tilesByLang: Record<"en" | "id", Tile[]> = {
+  en: [
+    { icon: Thermometer, label: "Cold storage", value: "3.4°C", status: "ok", meta: "within range" },
+    { icon: Cog, label: "Line 2 uptime", value: "99.1%", status: "ok", meta: "nominal" },
+    { icon: Droplets, label: "Field moisture", value: "41%", status: "watch", meta: "trending dry" },
+    { icon: Activity, label: "Pump vibration", value: "High", status: "alert", meta: "inspect today" },
+  ],
+  id: [
+    { icon: Thermometer, label: "Cold storage", value: "3.4°C", status: "ok", meta: "dalam batas normal" },
+    { icon: Cog, label: "Uptime Line 2", value: "99.1%", status: "ok", meta: "normal" },
+    { icon: Droplets, label: "Kelembapan lahan", value: "41%", status: "watch", meta: "cenderung kering" },
+    { icon: Activity, label: "Getaran pompa", value: "Tinggi", status: "alert", meta: "periksa hari ini" },
+  ],
+};
 
 const statusColor: Record<Tile["status"], string> = {
   ok: "text-emerald-400",
@@ -29,6 +38,8 @@ const statusDot: Record<Tile["status"], string> = {
 
 /** Live-status tiles with a quiet pulse — color always paired with a label. */
 export default function LiveTiles({ className = "" }: { className?: string }) {
+  const { lang } = useLanguage();
+  const tiles = tilesByLang[lang];
   return (
     <div className={`grid grid-cols-2 gap-3 sm:gap-4 ${className}`}>
       {tiles.map((t) => {

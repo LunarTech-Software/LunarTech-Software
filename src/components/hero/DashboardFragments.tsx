@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { LayoutDashboard, Radio, Globe } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useLanguage } from "../../lib/i18n/LanguageContext";
 
 type FragmentDef = {
   className: string;
@@ -11,11 +12,18 @@ type FragmentDef = {
   floatDuration: number;
 };
 
-const fragments: FragmentDef[] = [
-  { className: "left-[6%] top-[16%]", icon: LayoutDashboard, label: "Live Dashboard", sublabel: "Operations overview", kind: "dashboard", floatDuration: 7 },
-  { className: "right-[8%] top-[38%]", icon: Radio, label: "Sensor Alert", sublabel: "Status: nominal", kind: "sensor", floatDuration: 8.5 },
-  { className: "left-[14%] bottom-[14%]", icon: Globe, label: "Web Platform", sublabel: "lunartech.my", kind: "web", floatDuration: 9.5 },
-];
+const fragmentsByLang: Record<"en" | "id", FragmentDef[]> = {
+  en: [
+    { className: "left-[6%] top-[16%]", icon: LayoutDashboard, label: "Live Dashboard", sublabel: "Operations overview", kind: "dashboard", floatDuration: 7 },
+    { className: "right-[8%] top-[38%]", icon: Radio, label: "Sensor Alert", sublabel: "Status: nominal", kind: "sensor", floatDuration: 8.5 },
+    { className: "left-[14%] bottom-[14%]", icon: Globe, label: "Web Platform", sublabel: "lunartech.id", kind: "web", floatDuration: 9.5 },
+  ],
+  id: [
+    { className: "left-[6%] top-[16%]", icon: LayoutDashboard, label: "Dasbor Live", sublabel: "Ringkasan operasi", kind: "dashboard", floatDuration: 7 },
+    { className: "right-[8%] top-[38%]", icon: Radio, label: "Notifikasi Sensor", sublabel: "Status: normal", kind: "sensor", floatDuration: 8.5 },
+    { className: "left-[14%] bottom-[14%]", icon: Globe, label: "Platform Web", sublabel: "lunartech.id", kind: "web", floatDuration: 9.5 },
+  ],
+};
 
 function FragmentCard({ def }: { def: FragmentDef }) {
   const Icon = def.icon;
@@ -53,10 +61,11 @@ function FragmentCard({ def }: { def: FragmentDef }) {
 }
 
 export default function DashboardFragments({ visible }: { visible: boolean }) {
+  const { lang } = useLanguage();
   if (!visible) return null;
   return (
     <>
-      {fragments.map((def) => (
+      {fragmentsByLang[lang].map((def) => (
         <FragmentCard key={def.label} def={def} />
       ))}
     </>

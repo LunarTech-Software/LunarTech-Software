@@ -2,24 +2,58 @@ import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, TrendingDown, CircleCheck, TriangleAlert } from "lucide-react";
 import Reveal from "../Reveal";
 import { Container, Section, Kicker, Heading } from "../Section";
+import { useLanguage } from "../../lib/i18n/LanguageContext";
+
+const mockCopy = {
+  en: {
+    liveLabel: "Operations · Live (mockup)",
+    updated: "Updated 12s ago",
+    kpis: [
+      { label: "Output today", value: "1,284", delta: "+6.2%", up: true },
+      { label: "On-time", value: "97.4%", delta: "+1.1%", up: true },
+      { label: "Downtime", value: "22m", delta: "-14%", up: false },
+    ],
+    throughput: "Throughput · 24h",
+    unitsPerHr: "units / hr",
+    rows: [
+      { ok: true, label: "Cold storage A", meta: "3.4°C · in range" },
+      { ok: true, label: "Line 2 · packaging", meta: "running" },
+      { ok: false, label: "Sensor · warehouse 4", meta: "check required" },
+    ],
+  },
+  id: {
+    liveLabel: "Operasi · Live (mockup)",
+    updated: "Diperbarui 12 detik lalu",
+    kpis: [
+      { label: "Output hari ini", value: "1.284", delta: "+6,2%", up: true },
+      { label: "Tepat waktu", value: "97,4%", delta: "+1,1%", up: true },
+      { label: "Downtime", value: "22m", delta: "-14%", up: false },
+    ],
+    throughput: "Throughput · 24 jam",
+    unitsPerHr: "unit / jam",
+    rows: [
+      { ok: true, label: "Cold storage A", meta: "3,4°C · dalam batas normal" },
+      { ok: true, label: "Line 2 · pengemasan", meta: "berjalan" },
+      { ok: false, label: "Sensor · gudang 4", meta: "perlu diperiksa" },
+    ],
+  },
+};
 
 function DashboardMock() {
+  const { lang } = useLanguage();
+  const m = mockCopy[lang];
   return (
     <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-2xl shadow-black/40 backdrop-blur-md sm:p-5">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-lunar-teal animate-node-pulse" />
-          <span className="text-[13px] text-muted-silver">Operations · Live (mockup)</span>
+          <span className="text-[13px] text-muted-silver">{m.liveLabel}</span>
         </div>
-        <span className="text-[11px] tracking-wide text-technical-grey">Updated 12s ago</span>
+        <span className="text-[11px] tracking-wide text-technical-grey">{m.updated}</span>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        {[
-          { label: "Output today", value: "1,284", delta: "+6.2%", up: true },
-          { label: "On-time", value: "97.4%", delta: "+1.1%", up: true },
-          { label: "Downtime", value: "22m", delta: "-14%", up: false },
-        ].map((k) => (
+        {m.kpis.map((k) => (
           <div key={k.label} className="rounded-xl border border-white/5 bg-panel/70 p-3">
             <p className="text-[11px] text-technical-grey">{k.label}</p>
             <p className="mt-1 text-xl font-semibold tabular-nums text-soft-white">{k.value}</p>
@@ -33,8 +67,8 @@ function DashboardMock() {
 
       <div className="mt-4 rounded-xl border border-white/5 bg-panel/40 p-4">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-[12px] text-muted-silver">Throughput · 24h</p>
-          <p className="text-[11px] text-technical-grey">units / hr</p>
+          <p className="text-[12px] text-muted-silver">{m.throughput}</p>
+          <p className="text-[11px] text-technical-grey">{m.unitsPerHr}</p>
         </div>
         <svg viewBox="0 0 320 90" className="h-24 w-full" preserveAspectRatio="none">
           <defs>
@@ -59,11 +93,7 @@ function DashboardMock() {
       </div>
 
       <div className="mt-4 space-y-2">
-        {[
-          { ok: true, label: "Cold storage A", meta: "3.4°C · in range" },
-          { ok: true, label: "Line 2 · packaging", meta: "running" },
-          { ok: false, label: "Sensor · warehouse 4", meta: "check required" },
-        ].map((row) => (
+        {m.rows.map((row) => (
           <div key={row.label} className="flex items-center justify-between rounded-lg border border-white/5 bg-panel/50 px-3 py-2">
             <span className="flex items-center gap-2 text-[13px] text-soft-white">
               {row.ok ? <CircleCheck size={14} className="text-emerald-400" /> : <TriangleAlert size={14} className="text-amber-400" />}
@@ -77,23 +107,35 @@ function DashboardMock() {
   );
 }
 
+const copy = {
+  en: {
+    kicker: "Dashboards & reporting",
+    heading: "See your whole operation in real time.",
+    body: "Live figures replace manual checking and scattered files. KPIs, alerts, and status — clean, uncluttered, and always current.",
+    link: "Explore dashboards & reporting",
+  },
+  id: {
+    kicker: "Dasbor & pelaporan",
+    heading: "Lihat seluruh operasi Anda secara real-time.",
+    body: "Angka real-time menggantikan pengecekan manual dan file yang tersebar. KPI, notifikasi, dan status — rapi, jelas, dan selalu terkini.",
+    link: "Jelajahi dasbor & pelaporan",
+  },
+};
+
 export default function DashboardPreview() {
+  const { lang } = useLanguage();
+  const t = copy[lang];
   return (
     <Section>
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
-            <Kicker>Dashboards & reporting</Kicker>
-            <Heading className="text-3xl md:text-5xl">
-              See your whole operation in real time.
-            </Heading>
-            <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted-silver">
-              Live figures replace manual checking and scattered files. KPIs, alerts, and status — clean,
-              uncluttered, and always current.
-            </p>
+            <Kicker>{t.kicker}</Kicker>
+            <Heading className="text-3xl md:text-5xl">{t.heading}</Heading>
+            <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted-silver">{t.body}</p>
             <div className="mt-8">
-              <Link to="/solutions/dashboards-reporting" className="inline-flex items-center gap-1.5 text-lunar-teal transition-colors hover:text-soft-white">
-                Explore dashboards <ArrowRight size={15} />
+              <Link to="/solutions/business-systems" className="inline-flex items-center gap-1.5 text-lunar-teal transition-colors hover:text-soft-white">
+                {t.link} <ArrowRight size={15} />
               </Link>
             </div>
           </Reveal>

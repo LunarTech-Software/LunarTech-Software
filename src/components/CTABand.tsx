@@ -3,6 +3,7 @@ import Reveal from "./Reveal";
 import Button from "./Button";
 import { Container } from "./Section";
 import { contact } from "../lib/site";
+import { useCommonStrings } from "../lib/i18n/common";
 
 interface CTABandProps {
   heading: string;
@@ -13,6 +14,7 @@ interface CTABandProps {
 
 /** Recurring conversion band — one solid primary + supporting ghost actions. */
 export default function CTABand({ heading, body, catalogue = true, consultation = true }: CTABandProps) {
+  const c = useCommonStrings();
   return (
     <section className="relative border-t border-white/8 py-20 md:py-28">
       <Container>
@@ -31,21 +33,21 @@ export default function CTABand({ heading, body, catalogue = true, consultation 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               {catalogue ? (
                 <Button to="/catalogue" variant="primary">
-                  Request Catalogue <ArrowRight size={16} />
+                  {c.requestCatalogue} <ArrowRight size={16} />
                 </Button>
               ) : (
                 <Button to="/contact" variant="primary">
-                  Book a Consultation <ArrowRight size={16} />
+                  {c.bookConsultation} <ArrowRight size={16} />
                 </Button>
               )}
               {consultation && catalogue && (
                 <Button to="/contact" variant="secondary">
-                  Book a Consultation
+                  {c.bookConsultation}
                 </Button>
               )}
               {catalogue && (
                 <Button href={contact.whatsappText} newTab variant="link">
-                  <MessageCircle size={15} /> Chat on WhatsApp
+                  <MessageCircle size={15} /> {c.chatWhatsapp}
                 </Button>
               )}
             </div>

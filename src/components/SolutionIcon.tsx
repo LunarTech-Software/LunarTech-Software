@@ -1,4 +1,4 @@
-import { Globe, Boxes, Gauge, RadioTower, Sprout, Factory, GraduationCap, type LucideProps } from "lucide-react";
+import { Globe, Boxes, Gauge, RadioTower, Sprout, Factory, GraduationCap, Sparkles, type LucideProps } from "lucide-react";
 
 const icons: Record<string, React.ComponentType<LucideProps>> = {
   Globe,
@@ -8,6 +8,7 @@ const icons: Record<string, React.ComponentType<LucideProps>> = {
   Sprout,
   Factory,
   GraduationCap,
+  Sparkles,
 };
 
 export default function SolutionIcon({ name, ...props }: { name: string } & LucideProps) {

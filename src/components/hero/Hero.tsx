@@ -14,12 +14,32 @@ import HeroFallback from "./HeroFallback";
 import DashboardFragments from "./DashboardFragments";
 import ServiceSelector from "./ServiceSelector";
 import { contact } from "../../lib/site";
+import { useLanguage } from "../../lib/i18n/LanguageContext";
+import { useCommonStrings } from "../../lib/i18n/common";
 
 const SPLINE_SCENE_URL = "https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode";
 
 type Phase = "boot" | "forming" | "orbit";
 
+const copy = {
+  en: {
+    kicker: "Digital Engineering & Automation",
+    headline: "Enter the orbit of intelligent operations.",
+    subheadline:
+      "LUNAR builds custom websites, business systems, automation, and IoT monitoring — engineered around how your operation actually works.",
+  },
+  id: {
+    kicker: "Rekayasa Digital & Otomasi",
+    headline: "Masuki orbit operasi yang cerdas.",
+    subheadline:
+      "LUNAR membangun website kustom, sistem bisnis, otomasi, dan monitoring IoT — dirancang sesuai cara kerja operasi Anda yang sesungguhnya.",
+  },
+};
+
 export default function Hero() {
+  const { lang } = useLanguage();
+  const t = copy[lang];
+  const c = useCommonStrings();
   const reducedMotion = useReducedMotion();
   const coarsePointer = useIsCoarsePointer();
   const isDesktop = useIsDesktopViewport();
@@ -107,24 +127,21 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col justify-center"
         >
-          <Kicker>Digital Engineering & Automation</Kicker>
+          <Kicker>{t.kicker}</Kicker>
           <h1 className="text-4xl leading-[1.08] font-medium tracking-tight text-soft-white lg:text-6xl">
-            Enter the orbit of intelligent operations.
+            {t.headline}
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-silver lg:text-lg">
-            LUNAR builds custom websites, business systems, dashboards, automation, and IoT monitoring —
-            engineered around how your operation actually works.
-          </p>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-silver lg:text-lg">{t.subheadline}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button to="/catalogue" variant="primary">
-              Request Catalogue <ArrowRight size={16} />
+              {c.requestCatalogue} <ArrowRight size={16} />
             </Button>
             <Button href={contact.whatsappText} newTab variant="secondary">
-              <MessageCircle size={16} /> Chat on WhatsApp
+              <MessageCircle size={16} /> {c.chatWhatsapp}
             </Button>
             <Button href={contact.mailto} variant="link">
-              <Mail size={15} /> Email Enquiry
+              <Mail size={15} /> {c.emailEnquiry}
             </Button>
           </div>
 

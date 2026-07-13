@@ -2,17 +2,26 @@ import { ArrowRight } from "lucide-react";
 import Reveal from "../Reveal";
 import { Container, Section, Kicker, Heading } from "../Section";
 import Button from "../Button";
-import { processSteps } from "../../lib/site";
+import { useSiteData } from "../../lib/useSiteData";
+import { useLanguage } from "../../lib/i18n/LanguageContext";
+import { useCommonStrings } from "../../lib/i18n/common";
+
+const copy = {
+  en: { kicker: "How we work", heading: "We understand your operation before we build anything.", fullProcess: "See the full process" },
+  id: { kicker: "Bagaimana kami bekerja", heading: "Kami memahami operasi Anda sebelum membangun apa pun.", fullProcess: "Lihat proses lengkap" },
+};
 
 export default function ProcessPreview() {
+  const { lang } = useLanguage();
+  const t = copy[lang];
+  const c = useCommonStrings();
+  const { processSteps } = useSiteData();
   return (
     <Section>
       <Container>
         <Reveal className="mb-10 max-w-2xl">
-          <Kicker>How we work</Kicker>
-          <Heading className="text-3xl md:text-5xl">
-            We understand your operation before we build anything.
-          </Heading>
+          <Kicker>{t.kicker}</Kicker>
+          <Heading className="text-3xl md:text-5xl">{t.heading}</Heading>
         </Reveal>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {processSteps.slice(0, 4).map((step, i) => (
@@ -28,10 +37,10 @@ export default function ProcessPreview() {
         <Reveal>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button to="/process" variant="secondary">
-              See the full process <ArrowRight size={15} />
+              {t.fullProcess} <ArrowRight size={15} />
             </Button>
             <Button to="/contact" variant="link">
-              Book a Consultation
+              {c.bookConsultation}
             </Button>
           </div>
         </Reveal>

@@ -6,10 +6,35 @@ import Reveal from "../components/Reveal";
 import CTABand from "../components/CTABand";
 import SolutionIcon from "../components/SolutionIcon";
 import StarfieldBackdrop from "../components/StarfieldBackdrop";
-import { solutions, scopingNote } from "../lib/site";
+import { useSiteData } from "../lib/useSiteData";
+import { useLanguage } from "../lib/i18n/LanguageContext";
+
+const copy = {
+  en: {
+    allSolutions: "All solutions",
+    whoFor: "Who it's for",
+    problemsItSolves: "Problems it solves",
+    whatWeBuild: "What we build",
+    exploreOthers: "Explore other solutions",
+    ctaHeading: "Discuss a project.",
+    ctaBody: "Every build starts by understanding your operation. Let's map it.",
+  },
+  id: {
+    allSolutions: "Semua solusi",
+    whoFor: "Untuk siapa",
+    problemsItSolves: "Masalah yang diselesaikan",
+    whatWeBuild: "Apa yang kami bangun",
+    exploreOthers: "Jelajahi solusi lainnya",
+    ctaHeading: "Diskusikan proyek Anda.",
+    ctaBody: "Setiap proyek dimulai dengan memahami operasi Anda. Mari kita petakan.",
+  },
+};
 
 export default function SolutionDetailPage() {
   const { slug } = useParams();
+  const { lang } = useLanguage();
+  const t = copy[lang];
+  const { solutions, scopingNote } = useSiteData();
   const solution = solutions.find((s) => s.slug === slug);
 
   if (!solution) return <Navigate to="/solutions" replace />;
@@ -23,7 +48,7 @@ export default function SolutionDetailPage() {
         <Container>
           <div className="mb-10">
             <Link to="/solutions" className="inline-flex items-center gap-1.5 text-sm text-technical-grey transition-colors hover:text-muted-silver">
-              <ArrowLeft size={14} /> All solutions
+              <ArrowLeft size={14} /> {t.allSolutions}
             </Link>
           </div>
 
@@ -36,12 +61,12 @@ export default function SolutionDetailPage() {
               </Reveal>
 
               <Reveal>
-                <Kicker>Who it's for</Kicker>
+                <Kicker>{t.whoFor}</Kicker>
                 <p className="text-lg leading-relaxed text-muted-silver">{solution.whoFor}</p>
               </Reveal>
 
               <Reveal>
-                <Kicker>Problems it solves</Kicker>
+                <Kicker>{t.problemsItSolves}</Kicker>
                 <ul className="space-y-3">
                   {solution.problems.map((p) => (
                     <li key={p} className="flex items-start gap-3 text-muted-silver">
@@ -55,7 +80,7 @@ export default function SolutionDetailPage() {
 
             <div>
               <Reveal className="rounded-2xl border border-white/10 bg-white/5 p-7 backdrop-blur-md md:p-8">
-                <Kicker>What we build</Kicker>
+                <Kicker>{t.whatWeBuild}</Kicker>
                 <ul className="mt-2 space-y-3.5">
                   {solution.whatWeBuild.map((f) => (
                     <li key={f} className="flex items-start gap-3 text-soft-white">
@@ -64,12 +89,6 @@ export default function SolutionDetailPage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-7 border-t border-white/8 pt-5">
-                  <p className="text-xs leading-relaxed text-technical-grey">
-                    <span className="text-muted-silver">Visual direction — </span>
-                    {solution.visual}
-                  </p>
-                </div>
               </Reveal>
             </div>
           </div>
@@ -79,7 +98,7 @@ export default function SolutionDetailPage() {
           </Reveal>
 
           <Reveal className="mt-16">
-            <Heading className="mb-6 text-xl md:text-2xl">Explore other solutions</Heading>
+            <Heading className="mb-6 text-xl md:text-2xl">{t.exploreOthers}</Heading>
             <div className="flex flex-wrap gap-2.5">
               {solutions
                 .filter((s) => s.slug !== solution.slug)
@@ -98,7 +117,7 @@ export default function SolutionDetailPage() {
         </Container>
       </Section>
 
-      <CTABand heading="Discuss a project." body="Every build starts by understanding your operation. Let's map it." catalogue={false} />
+      <CTABand heading={t.ctaHeading} body={t.ctaBody} catalogue={false} />
     </div>
   );
 }

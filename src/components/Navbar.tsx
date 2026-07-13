@@ -4,11 +4,16 @@ import { motion, AnimatePresence } from "motion/react";
 import { MessageCircle } from "lucide-react";
 import Logo from "./Logo";
 import Button from "./Button";
-import { navLinks, contact } from "../lib/site";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { contact } from "../lib/site";
+import { useSiteData } from "../lib/useSiteData";
+import { useCommonStrings } from "../lib/i18n/common";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { navLinks } = useSiteData();
+  const c = useCommonStrings();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -48,8 +53,9 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
+          <LanguageSwitcher />
           <Button to="/catalogue" variant="primary" className="!px-5 !py-2.5 text-xs">
-            Request Catalogue
+            {c.requestCatalogue}
           </Button>
         </div>
 
@@ -95,11 +101,12 @@ export default function Navbar() {
               ))}
 
               <div className="flex flex-col items-center gap-4 mt-6 w-64">
+                <LanguageSwitcher className="mb-2" />
                 <Button to="/catalogue" variant="primary" className="w-full" onClick={() => setOpen(false)}>
-                  Request Catalogue
+                  {c.requestCatalogue}
                 </Button>
                 <Button href={contact.whatsappText} newTab variant="secondary" className="w-full" onClick={() => setOpen(false)}>
-                  <MessageCircle size={16} /> Chat on WhatsApp
+                  <MessageCircle size={16} /> {c.chatWhatsapp}
                 </Button>
               </div>
             </div>

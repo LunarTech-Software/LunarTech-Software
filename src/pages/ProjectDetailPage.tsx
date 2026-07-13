@@ -5,10 +5,41 @@ import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
 import CTABand from "../components/CTABand";
 import ProjectVisual from "../components/work/ProjectVisual";
-import { projects } from "../lib/site";
+import type { WorkLabel } from "../lib/site";
+import { useSiteData } from "../lib/useSiteData";
+import { useLanguage } from "../lib/i18n/LanguageContext";
+
+const labelText: Record<"en" | "id", Record<WorkLabel, string>> = {
+  en: { Platform: "Platform", Demo: "Demo", Prototype: "Prototype", Concept: "Concept" },
+  id: { Platform: "Platform", Demo: "Demo", Prototype: "Prototipe", Concept: "Konsep" },
+};
+
+const copy = {
+  en: {
+    allWork: "All work",
+    challenge: "Challenge",
+    whatWeBuilt: "What we built",
+    value: "Value",
+    relatedProjects: "Related projects",
+    ctaHeading: "Discuss a Similar Project.",
+    ctaBody: "Tell us what you're trying to see or control, and we'll scope it around your operation.",
+  },
+  id: {
+    allWork: "Semua karya",
+    challenge: "Tantangan",
+    whatWeBuilt: "Apa yang kami bangun",
+    value: "Nilai",
+    relatedProjects: "Proyek terkait",
+    ctaHeading: "Diskusikan Proyek Serupa.",
+    ctaBody: "Ceritakan apa yang ingin Anda lihat atau kendalikan, dan kami akan menyusun rencananya sesuai operasi Anda.",
+  },
+};
 
 export default function ProjectDetailPage() {
   const { slug } = useParams();
+  const { lang } = useLanguage();
+  const t = copy[lang];
+  const { projects } = useSiteData();
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) return <Navigate to="/our-work" replace />;
@@ -17,13 +48,17 @@ export default function ProjectDetailPage() {
 
   return (
     <div>
-      <PageHero kicker={`${project.category} · ${project.label}`} title={project.title} subtitle={project.solutionText} />
+      <PageHero
+        kicker={`${project.category} · ${labelText[lang][project.label]}`}
+        title={project.title}
+        subtitle={project.solutionText}
+      />
 
       <Section>
         <Container>
           <div className="mb-10">
             <Link to="/our-work" className="inline-flex items-center gap-1.5 text-sm text-technical-grey transition-colors hover:text-muted-silver">
-              <ArrowLeft size={14} /> All work
+              <ArrowLeft size={14} /> {t.allWork}
             </Link>
           </div>
 
@@ -34,11 +69,11 @@ export default function ProjectDetailPage() {
 
             <div className="space-y-8">
               <Reveal>
-                <Kicker>Challenge</Kicker>
+                <Kicker>{t.challenge}</Kicker>
                 <p className="text-lg leading-relaxed text-muted-silver">{project.problem}</p>
               </Reveal>
               <Reveal delay={0.05}>
-                <Kicker>What we built</Kicker>
+                <Kicker>{t.whatWeBuilt}</Kicker>
                 <ul className="space-y-3">
                   {project.features.map((f) => (
                     <li key={f} className="flex items-start gap-3 text-soft-white">
@@ -50,7 +85,7 @@ export default function ProjectDetailPage() {
               </Reveal>
               <Reveal delay={0.1}>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md">
-                  <Kicker>Value</Kicker>
+                  <Kicker>{t.value}</Kicker>
                   <p className="text-soft-white">{project.value}</p>
                 </div>
               </Reveal>
@@ -58,7 +93,7 @@ export default function ProjectDetailPage() {
           </div>
 
           <Reveal className="mt-16">
-            <Heading className="mb-6 text-xl md:text-2xl">Related projects</Heading>
+            <Heading className="mb-6 text-xl md:text-2xl">{t.relatedProjects}</Heading>
             <div className="grid gap-5 sm:grid-cols-3">
               {related.map((p) => (
                 <Link
@@ -76,7 +111,7 @@ export default function ProjectDetailPage() {
         </Container>
       </Section>
 
-      <CTABand heading="Discuss a Similar Project." body="Tell us what you're trying to see or control, and we'll scope it around your operation." catalogue={false} />
+      <CTABand heading={t.ctaHeading} body={t.ctaBody} catalogue={false} />
     </div>
   );
 }
