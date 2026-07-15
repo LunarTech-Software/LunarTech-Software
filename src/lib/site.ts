@@ -229,6 +229,15 @@ export interface Project {
   features: string[];
   /** Live, viewable link — only set once a real build exists to show. */
   liveUrl?: string;
+  /** Where the live preview crop centers on the page. "top" (default) suits
+   * pages with hero content up top, like a marketing site. "center" suits
+   * pages like a login screen, where the meaningful content sits in the
+   * middle of a mostly-empty background. */
+  previewFocus?: "top" | "center";
+  /** Extra zoom for the live preview, cropping in tighter around the focus
+   * point. 1 = default framing (whole page visible). Increase for pages
+   * where the meaningful content is small relative to the full viewport. */
+  previewZoom?: number;
 }
 
 export const projects: Project[] = [
@@ -256,8 +265,9 @@ export const projects: Project[] = [
     solutionText: "A live inventory and records system with real-time dashboards and low-stock alerts.",
     value: "One source of truth, replacing fragile spreadsheets.",
     features: ["Real-time stock levels", "KPI dashboard", "Low-stock threshold alerts", "Exportable reports"],
-    // TODO: add the live Netlify URL here once baja-makmur-erp-v2 is deployed, e.g.:
-    // liveUrl: "https://baja-makmur-erp.netlify.app/",
+    liveUrl: "https://baja-makmur-erp.onrender.com/",
+    previewFocus: "center",
+    previewZoom: 2.3,
   },
   {
     slug: "automation-iot-wip",

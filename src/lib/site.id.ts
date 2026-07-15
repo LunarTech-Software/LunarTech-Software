@@ -189,8 +189,9 @@ export const projects: Project[] = [
     solutionText: "Sistem inventaris dan catatan real-time dengan dasbor langsung dan notifikasi stok rendah.",
     value: "Satu sumber data yang akurat, menggantikan spreadsheet yang rapuh.",
     features: ["Tingkat stok real-time", "Dasbor KPI", "Notifikasi ambang batas stok rendah", "Laporan yang dapat diekspor"],
-    // TODO: isi liveUrl di sini setelah baja-makmur-erp-v2 di-deploy, contoh:
-    // liveUrl: "https://baja-makmur-erp.netlify.app/",
+    liveUrl: "https://baja-makmur-erp.onrender.com/",
+    previewFocus: "center",
+    previewZoom: 2.3,
   },
   {
     slug: "automation-iot-wip",

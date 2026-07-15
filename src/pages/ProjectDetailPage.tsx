@@ -66,7 +66,12 @@ export default function ProjectDetailPage() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
             <Reveal>
               {project.liveUrl ? (
-                <LivePreviewFrame url={project.liveUrl} className="aspect-auto h-full min-h-64" />
+                <LivePreviewFrame
+                  url={project.liveUrl}
+                  className="aspect-auto h-full min-h-64"
+                  focus={project.previewFocus}
+                  zoom={project.previewZoom}
+                />
               ) : (
                 <ProjectVisual kind={project.visual} className="aspect-auto h-full min-h-64" />
               )}

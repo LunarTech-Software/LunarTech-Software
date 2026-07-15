@@ -97,7 +97,11 @@ export default function OurWorkPage() {
                   <div className="group relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition-colors hover:border-white/20">
                     <Link to={`/our-work/${p.slug}`} className="absolute inset-0 z-0" aria-label={p.title} />
                     <div className="pointer-events-none relative z-[1] flex h-full flex-col">
-                      {p.liveUrl ? <LivePreviewFrame url={p.liveUrl} /> : <ProjectVisual kind={p.visual} />}
+                      {p.liveUrl ? (
+                        <LivePreviewFrame url={p.liveUrl} focus={p.previewFocus} zoom={p.previewZoom} />
+                      ) : (
+                        <ProjectVisual kind={p.visual} />
+                      )}
                       <div className="mt-4 flex items-center justify-between gap-2">
                         <span className="text-[11px] uppercase tracking-[0.14em] text-technical-grey">{p.category}</span>
                         <span className={`rounded-full border px-2.5 py-0.5 text-[10px] uppercase tracking-wide ${labelStyle[p.label]}`}>
