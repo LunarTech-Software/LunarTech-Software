@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     siteName: "LUNAR",
     type: "website",
   },
+  verification: {
+    google: "IhCLguqRxUdTPO7NwCR4BjOv9CwgFuChxCs3RwT_x_k",
+  },
 };
 
 export default function RootLayout({
