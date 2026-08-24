@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
@@ -21,11 +21,24 @@ const labelText: Record<"en" | "id", Record<string, string>> = {
 
 export default function Results() {
   const { t, lang } = useLanguage();
-  const [index, setIndex] = useState(0);
-  const maxIndex = projects.length - 1;
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
 
-  const next = () => setIndex((i) => Math.min(i + 1, maxIndex));
-  const prev = () => setIndex((i) => Math.max(i - 1, 0));
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-card]");
+    const step = card ? card.offsetWidth + 24 : el.clientWidth * 0.85;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
+  const onScroll = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-card]");
+    const step = card ? card.offsetWidth + 24 : el.clientWidth;
+    setActive(Math.round(el.scrollLeft / step));
+  };
 
   return (
     <Section number="02" id="results">
@@ -50,12 +63,12 @@ export default function Results() {
               {lang === "en" ? "All work" : "Semua karya"} <ArrowUpRight size={14} />
             </Link>
             <span className="font-mono text-sm text-muted">
-              {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+              {String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
             </span>
             <button
               type="button"
-              onClick={prev}
-              disabled={index === 0}
+              onClick={() => scrollByCard(-1)}
+              disabled={active === 0}
               aria-label="Previous project"
               className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent/60 hover:text-accent disabled:opacity-30"
             >
@@ -63,8 +76,8 @@ export default function Results() {
             </button>
             <button
               type="button"
-              onClick={next}
-              disabled={index === maxIndex}
+              onClick={() => scrollByCard(1)}
+              disabled={active === projects.length - 1}
               aria-label="Next project"
               className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent/60 hover:text-accent disabled:opacity-30"
             >
@@ -73,35 +86,34 @@ export default function Results() {
           </div>
         </div>
 
-        <div className="overflow-hidden border-t border-line pt-8">
-          <div
-            className="flex gap-6 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{ transform: `translateX(calc(-${index} * (min(560px, 82vw) + 1.5rem)))` }}
-          >
-            {projects.map((p) => (
-              <article key={p.slug} className="w-[min(560px,82vw)] shrink-0">
-                {p.liveUrl ? <LivePreviewFrame url={p.liveUrl} /> : <InDevelopmentPanel />}
-                <div className="rounded-b-2xl border border-line p-6">
-                  <div className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[0.08em] text-technical">
-                    <span>{t(p.category)}</span>
-                    <span className={`rounded-full border px-2.5 py-0.5 ${labelStyle[p.label]}`}>{labelText[lang][p.label]}</span>
-                  </div>
-                  <h3 className="text-2xl font-medium text-foreground sm:text-3xl">{t(p.title)}</h3>
-                  <p className="mt-3 leading-relaxed text-muted">{t(p.description)}</p>
-                  {p.liveUrl && (
-                    <a
-                      href={p.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex w-fit items-center gap-1.5 text-sm text-accent transition-colors hover:text-foreground"
-                    >
-                      {lang === "en" ? "Visit site" : "Kunjungi situs"} <ExternalLink size={14} />
-                    </a>
-                  )}
+        <div
+          ref={scrollerRef}
+          onScroll={onScroll}
+          className="flex gap-6 overflow-x-auto border-t border-line pt-8 [scrollbar-width:none] [-ms-overflow-style:none] snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
+        >
+          {projects.map((p) => (
+            <article key={p.slug} data-card className="w-[min(560px,82vw)] shrink-0 snap-start">
+              {p.liveUrl ? <LivePreviewFrame url={p.liveUrl} /> : <InDevelopmentPanel />}
+              <div className="rounded-b-2xl border border-line p-6">
+                <div className="mb-3 flex items-center gap-3 text-[11px] uppercase tracking-[0.08em] text-technical">
+                  <span>{t(p.category)}</span>
+                  <span className={`rounded-full border px-2.5 py-0.5 ${labelStyle[p.label]}`}>{labelText[lang][p.label]}</span>
                 </div>
-              </article>
-            ))}
-          </div>
+                <h3 className="text-2xl font-medium text-foreground sm:text-3xl">{t(p.title)}</h3>
+                <p className="mt-3 leading-relaxed text-muted">{t(p.description)}</p>
+                {p.liveUrl && (
+                  <a
+                    href={p.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex w-fit items-center gap-1.5 text-sm text-accent transition-colors hover:text-foreground"
+                  >
+                    {lang === "en" ? "Visit site" : "Kunjungi situs"} <ExternalLink size={14} />
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
         </div>
       </Container>
     </Section>

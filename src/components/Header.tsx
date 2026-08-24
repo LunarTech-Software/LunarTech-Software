@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { MessageCircle } from "lucide-react";
+import { ChevronDown, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 import { navLinks, contact, solutions } from "@/lib/content";
 import Button from "@/components/ui/Button";
@@ -12,7 +12,9 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const { lang, setLang, t } = useLanguage();
+  const solutionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -27,6 +29,17 @@ export default function Header() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!solutionsOpen) return;
+    const onPointerDown = (e: PointerEvent) => {
+      if (solutionsRef.current && !solutionsRef.current.contains(e.target as Node)) {
+        setSolutionsOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [solutionsOpen]);
 
   return (
     <>
@@ -44,13 +57,20 @@ export default function Header() {
             link.href === "/#solutions" ? (
               <div
                 key={link.href}
+                ref={solutionsRef}
                 className="relative"
                 onMouseEnter={() => setSolutionsOpen(true)}
                 onMouseLeave={() => setSolutionsOpen(false)}
               >
-                <Link href={link.href} className="transition-colors hover:text-foreground">
+                <button
+                  type="button"
+                  onClick={() => setSolutionsOpen((v) => !v)}
+                  aria-expanded={solutionsOpen}
+                  className="flex items-center gap-1 transition-colors hover:text-foreground"
+                >
                   {t(link.label)}
-                </Link>
+                  <ChevronDown size={13} className={`transition-transform ${solutionsOpen ? "rotate-180" : ""}`} />
+                </button>
                 <AnimatePresence>
                   {solutionsOpen && (
                     <motion.div
@@ -64,6 +84,7 @@ export default function Header() {
                         <Link
                           key={s.slug}
                           href={`/solutions/${s.slug}`}
+                          onClick={() => setSolutionsOpen(false)}
                           className="block rounded-xl px-4 py-2.5 text-sm text-muted transition-colors hover:bg-accent-soft hover:text-accent"
                         >
                           {t(s.name)}
@@ -123,21 +144,63 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 flex flex-col bg-void/98 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-void/98 backdrop-blur-sm lg:hidden"
           >
-            <div className="flex flex-1 flex-col items-center justify-center gap-7">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 * i + 0.1 }}
-                >
-                  <Link href={link.href} onClick={() => setOpen(false)} className="text-3xl font-medium tracking-tight text-foreground">
-                    {t(link.label)}
-                  </Link>
-                </motion.div>
-              ))}
+            <div className="flex flex-1 flex-col items-center justify-center gap-7 py-28">
+              {navLinks.map((link, i) =>
+                link.href === "/#solutions" ? (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 * i + 0.1 }}
+                    className="flex flex-col items-center"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setMobileSolutionsOpen((v) => !v)}
+                      aria-expanded={mobileSolutionsOpen}
+                      className="flex items-center gap-2 text-3xl font-medium tracking-tight text-foreground"
+                    >
+                      {t(link.label)}
+                      <ChevronDown size={22} className={`transition-transform ${mobileSolutionsOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    <AnimatePresence>
+                      {mobileSolutionsOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="mt-4 flex flex-col items-center gap-4 overflow-hidden"
+                        >
+                          {solutions.map((s) => (
+                            <Link
+                              key={s.slug}
+                              href={`/solutions/${s.slug}`}
+                              onClick={() => setOpen(false)}
+                              className="text-base text-muted transition-colors hover:text-accent"
+                            >
+                              {t(s.name)}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 * i + 0.1 }}
+                  >
+                    <Link href={link.href} onClick={() => setOpen(false)} className="text-3xl font-medium tracking-tight text-foreground">
+                      {t(link.label)}
+                    </Link>
+                  </motion.div>
+                ),
+              )}
               <div className="mt-6 flex w-64 flex-col items-center gap-4">
                 <Button href="/contact" variant="primary" className="w-full" onClick={() => setOpen(false)}>
                   {lang === "en" ? "Request Catalogue" : "Minta Katalog"}
