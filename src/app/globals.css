@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  /* Font stacks — exact match to daynight.co.uk's declared --sans/--mono/--serif root vars.
+     Reference the actual next/font CSS variables (not hardcoded family name strings) so
+     this keeps resolving correctly regardless of the internal name the font loader assigns
+     (Vercel's `geist` package registers "GeistSans"/"GeistMono", not literally "Geist"). */
+  --font-sans: var(--font-geist-sans), "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-serif: var(--font-instrument-serif), "Iowan Old Style", Georgia, serif;
+
+  /* Color tokens — matched exactly to daynight.co.uk's computed styles
+     (getComputedStyle sweep: body bg #000, body text rgb(248,237,220),
+     paragraph color rgb(248,237,220 / .72), kicker color ~rgb(232,197,71),
+     primary CTA bg rgb(248,237,220) on black, root --accent/--accent-2/--line vars). */
+  --color-void: #000000;
+  --color-panel: #0a0a0a;
+  --color-line: rgb(248 237 220 / 0.14);
+  --color-line-soft: rgb(248 237 220 / 0.08);
+  --color-foreground: #f8eddc;
+  --color-muted: rgb(248 237 220 / 0.72);
+  --color-technical: rgb(248 237 220 / 0.5);
+  --color-accent: #ff6b3d;
+  --color-accent-2: #f0b65a;
+  --color-accent-soft: rgb(255 107 61 / 0.12);
+
+  /* Container / rhythm — matched to daynight.co.uk's measured geometry
+     (getComputedStyle sweep at 390/1280/1440px: container 1400px w/ 32px
+     gutter at every breakpoint incl. mobile; section padding-block ranges
+     ~84-126px on desktop). */
+  --container-max: 1400px;
+  --section-py: clamp(4rem, 8vw, 7.5rem);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background-color: var(--color-void);
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-void);
+  color: var(--color-foreground);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-void);
+}
+
+.lunar-container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 480px) {
+  .lunar-container {
+    padding-inline: 2rem;
+  }
+}
+
+.lunar-section {
+  padding-block: var(--section-py);
+}
+
+.lunar-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-2);
+}
+
+.lunar-chapter-number {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-foreground);
+}
+
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee-scroll 38s linear infinite;
+}
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes clock-blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
