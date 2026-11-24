@@ -306,7 +306,8 @@ export default function IndustryScene() {
           {INDUSTRIES.map((ind) => (
             <article key={ind.slug} style={{ color: ind.ink }} className="rounded-[3px] p-5">
               <div style={{ background: ind.bg }} className="-m-5 p-5">
-                <div className="mb-5">
+                {/* the screenshot variant is absolutely positioned, so it needs a box with its own height */}
+                <div className={`mb-5 ${ind.shot ? "relative aspect-[16/11]" : ""}`}>
                   <Visual ind={ind} />
                 </div>
                 {text(ind)}
