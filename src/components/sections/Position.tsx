@@ -7,20 +7,25 @@ import Reveal from "@/components/ui/Reveal";
 
 export default function Position() {
   const { t } = useLanguage();
+  const words = t(position.heading).split(" ");
+  const last = words.pop();
   return (
-    <Section number="01" id="position">
+    <Section number="01" id="position" theme="light" border={false}>
       <Container>
-        <span className="lunar-kicker mb-6 block">{t(position.kicker)}</span>
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <span className="lunar-kicker mb-8 block">{t(position.kicker)}</span>
+        <div className="grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
           <Reveal>
-            <h2 className="text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[2.25rem] lg:text-[2.85rem]">
-              {t(position.heading)}
+            <h2 className="lunar-statement">
+              <span className="dim">{words.join(" ")} </span>
+              <span>{last}</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-lg leading-relaxed text-muted">
               {t(position.body)}
-              <span className="mt-4 block text-foreground">{t(position.highlight)}</span>
+              <span className="mt-5 block font-display text-xl font-medium uppercase leading-tight tracking-tight text-foreground">
+                {t(position.highlight)}
+              </span>
             </p>
           </Reveal>
         </div>

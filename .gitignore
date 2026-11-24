@@ -47,3 +47,7 @@ next-env.d.ts
 
 # Local temp files
 temp/
+
+# Local tooling and raw captures
+.claude/
+public/images/work/_raw/

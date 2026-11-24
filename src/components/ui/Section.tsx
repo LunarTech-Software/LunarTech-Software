@@ -11,15 +11,17 @@ export function Section({
   number,
   border = true,
   id,
+  theme,
 }: {
   children: ReactNode;
   className?: string;
   number?: string;
   border?: boolean;
   id?: string;
+  theme?: "light";
 }) {
   return (
-    <section id={id} className={cn("lunar-section relative scroll-mt-24", border && "border-t border-line", className)}>
+    <section id={id} className={cn("lunar-section relative scroll-mt-24", theme === "light" && "theme-light", border && "border-t border-line", className)}>
       {number && (
         <Container>
           <span className="lunar-chapter-number mb-6 block">({number})</span>
@@ -38,7 +40,7 @@ export function Heading({ children, className }: { children: ReactNode; classNam
   return (
     <h2
       className={cn(
-        "text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[2.25rem] lg:text-[2.85rem]",
+        "lunar-h2",
         className,
       )}
     >

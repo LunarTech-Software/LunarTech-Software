@@ -9,10 +9,10 @@ export default function Marquee() {
   const track = [...items, ...items];
 
   return (
-    <div className="marquee-viewport overflow-hidden border-y border-line bg-panel/40 py-5">
+    <div className="theme-light marquee-viewport overflow-hidden border-y border-line py-5">
       <div className="marquee-track flex w-max gap-12 whitespace-nowrap">
         {[...track, ...track].map((label, i) => (
-          <span key={i} className="flex items-center gap-12 text-sm text-muted">
+          <span key={i} className="flex items-center gap-12 font-mono text-[11px] uppercase tracking-[0.08em] text-muted">
             {label}
             <span aria-hidden className="text-accent">
               ✦

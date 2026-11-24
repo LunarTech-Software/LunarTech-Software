@@ -13,7 +13,7 @@ export default function Footer() {
       <Container className="py-16">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Link href="/" className="text-sm font-medium tracking-tight text-foreground">
+            <Link href="/" className="font-display text-xl font-medium uppercase tracking-[0.04em] text-foreground">
               LUNAR
             </Link>
             <p className="mt-5 max-w-xs leading-relaxed text-muted">{tagline}</p>
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-xs uppercase tracking-[0.14em] text-technical">{lang === "en" ? "Navigate" : "Navigasi"}</h4>
+            <h4 className="mb-4 font-mono text-[10px] uppercase tracking-[0.1em] text-technical">{lang === "en" ? "Navigate" : "Navigasi"}</h4>
             <ul className="space-y-3 text-sm text-muted">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-xs uppercase tracking-[0.14em] text-technical">{lang === "en" ? "Solutions" : "Solusi"}</h4>
+            <h4 className="mb-4 font-mono text-[10px] uppercase tracking-[0.1em] text-technical">{lang === "en" ? "Solutions" : "Solusi"}</h4>
             <ul className="space-y-3 text-sm text-muted">
               {solutions.map((s) => (
                 <li key={s.slug}>
@@ -60,7 +60,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col justify-between gap-3 border-t border-line pt-8 text-xs text-technical sm:flex-row">
+        <div
+          aria-hidden
+          className="mt-14 select-none font-display text-[clamp(5rem,26vw,22rem)] font-medium uppercase leading-[0.8] tracking-[-0.05em] text-foreground/[0.06]"
+        >
+          LUNAR
+        </div>
+
+        <div className="mt-10 flex flex-col justify-between gap-3 border-t border-line pt-8 text-xs text-technical sm:flex-row">
           <span>{t(footerCopyright)}</span>
           <span>{t(footerScopingNote)}</span>
         </div>

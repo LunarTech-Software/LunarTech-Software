@@ -16,7 +16,7 @@ export default function FAQ() {
       <Container>
         <Reveal className="mb-10 max-w-2xl">
           <Kicker>{lang === "en" ? "Questions, answered" : "Pertanyaan, terjawab"}</Kicker>
-          <h2 className="text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[2.25rem] lg:text-[2.85rem]">
+          <h2 className="lunar-h2">
             {lang === "en" ? "Frequently asked." : "Yang sering ditanyakan."}
           </h2>
         </Reveal>

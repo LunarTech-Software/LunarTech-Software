@@ -13,7 +13,7 @@ export default function Packages() {
       <Container>
         <Reveal className="mb-4 max-w-2xl">
           <Kicker>{lang === "en" ? "Packages" : "Paket"}</Kicker>
-          <h2 className="text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[2.25rem] lg:text-[2.85rem]">
+          <h2 className="lunar-h2">
             {lang === "en" ? "Scoped to your operation, not a price list." : "Disesuaikan operasi Anda, bukan daftar harga."}
           </h2>
           <p className="mt-4 text-muted">{t(scopingNote)}</p>

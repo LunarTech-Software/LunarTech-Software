@@ -14,9 +14,11 @@ export const contact = {
 export const tagline = "The Orbit of Intelligent Operations";
 
 export const navLinks: NavLink[] = [
-  { label: { en: "Position", id: "Posisi" }, href: "/#position" },
-  { label: { en: "Solutions", id: "Solusi" }, href: "/#solutions" },
+  { label: { en: "About", id: "Tentang" }, href: "/about" },
+  { label: { en: "Solutions", id: "Solusi" }, href: "/solutions" },
+  { label: { en: "Products", id: "Produk" }, href: "/products" },
   { label: { en: "Our Work", id: "Karya Kami" }, href: "/our-work" },
+  { label: { en: "Insights", id: "Insights" }, href: "/insights" },
   { label: { en: "Process", id: "Proses" }, href: "/#process" },
   { label: { en: "Contact", id: "Kontak" }, href: "/contact" },
 ];

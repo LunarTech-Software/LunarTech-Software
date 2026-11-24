@@ -46,7 +46,7 @@ export default function Results() {
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <Kicker>{lang === "en" ? "Results" : "Hasil"}</Kicker>
-            <h2 className="text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[2.25rem] lg:text-[2.85rem]">
+            <h2 className="lunar-h2">
               {lang === "en" ? "Systems, prototypes & working concepts." : "Sistem, prototipe & konsep yang berfungsi."}
             </h2>
             <p className="mt-3 max-w-xl text-muted">

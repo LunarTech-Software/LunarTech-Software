@@ -22,7 +22,7 @@ const variants = {
 
 export default function Button({ children, variant = "primary", className, href, newTab, onClick }: ButtonProps) {
   const base = cn(
-    "inline-flex items-center gap-2 rounded-full px-4 py-[9px] text-[13px] font-medium tracking-tight transition-all duration-[340ms] ease-in-out",
+    "group inline-flex items-center gap-2 rounded-full px-5 py-[11px] font-mono text-[11px] font-medium uppercase tracking-[0.06em] transition-all duration-[340ms] ease-in-out",
     variant !== "link" && variants[variant],
     variant === "link" && variants.link,
     className,

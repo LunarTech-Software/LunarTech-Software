@@ -14,7 +14,7 @@ export default function Solutions() {
       <Container>
         <Reveal className="mb-12 max-w-2xl">
           <Kicker>{lang === "en" ? "Solutions" : "Solusi"}</Kicker>
-          <h2 className="text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[2.25rem] lg:text-[2.85rem]">
+          <h2 className="lunar-h2">
             {lang === "en" ? "Seven ways we bring clarity to your operation." : "Tujuh cara kami membawa kejelasan ke operasi Anda."}
           </h2>
         </Reveal>

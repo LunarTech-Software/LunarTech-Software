@@ -12,7 +12,7 @@ export default function Process() {
       <Container>
         <Reveal className="mb-12 max-w-2xl">
           <Kicker>{lang === "en" ? "How engagement works" : "Bagaimana kami bekerja"}</Kicker>
-          <h2 className="text-[1.75rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-[2.25rem] lg:text-[2.85rem]">
+          <h2 className="lunar-h2">
             {lang === "en" ? "We understand your operation before we build anything." : "Kami memahami operasi Anda sebelum membangun apa pun."}
           </h2>
         </Reveal>
