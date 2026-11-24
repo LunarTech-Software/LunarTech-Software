@@ -181,7 +181,7 @@ export default function Header() {
               aria-hidden
               animate={{ rotate: activeIdx * 28 }}
               transition={{ type: "spring", stiffness: 40, damping: 14 }}
-              className="pointer-events-none absolute -right-[38vw] top-[18vh] h-[110vw] w-[110vw] max-h-[780px] max-w-[780px]"
+              className="pointer-events-none absolute -right-[38vw] top-[18vh] hidden h-[110vw] w-[110vw] max-h-[780px] max-w-[780px] sm:block"
             >
               <svg viewBox="-200 -200 400 400" className="h-full w-full">
                 {[60, 100, 140, 190].map((r, i) => (

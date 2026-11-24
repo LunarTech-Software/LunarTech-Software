@@ -130,7 +130,7 @@ export default function InternalHeader() {
             className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-[#090A0E] text-[#F0EAE0]"
           >
             {/* orbit geometry that turns toward the item under the pointer */}
-            <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div aria-hidden className="pointer-events-none absolute inset-0 hidden overflow-hidden sm:block">
             <motion.div
               animate={{ rotate: hoverIdx * 24 }}
               transition={{ type: "spring", stiffness: 36, damping: 14 }}
@@ -169,17 +169,17 @@ export default function InternalHeader() {
                           onFocus={() => setHoverIdx(i)}
                           aria-current={active ? "page" : undefined}
                           aria-label={t(item.label)}
-                          className="group/roll flex items-baseline gap-4 py-[0.6vh] sm:gap-8"
+                          className="group/roll flex items-center gap-4 py-2 sm:gap-8 sm:py-[0.6vh]"
                         >
                           <span aria-hidden className="w-8 font-mono text-[11px] tracking-[0.1em] text-copper">
-                            {String(i).padStart(2, "0")}
+                            {String(i + 1).padStart(2, "0")}
                           </span>
                           <RollText
                             text={t(item.label).toUpperCase()}
                             stagger={26}
-                            className={`font-display text-[clamp(2.2rem,min(9.2vh,12.5vw),7.5rem)] font-medium leading-[1.02] tracking-[-0.03em] ${active ? "text-[#F0EAE0]" : "text-[#F0EAE0]/45"}`}
+                            className={`font-display text-[clamp(2.2rem,min(9.2vh,12.5vw),7.5rem)] font-medium leading-[1.02] tracking-[-0.03em] ${active ? "text-[#F0EAE0]" : "text-[#F0EAE0]/60"}`}
                           />
-                          {active && <span aria-hidden className="h-2.5 w-2.5 shrink-0 translate-y-[-0.4em] rounded-full bg-solar" />}
+                          {active && <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full bg-solar" />}
                         </Link>
                       </motion.div>
                     </li>
